@@ -62,6 +62,7 @@ public class GlobalMethods {
 
 
     }
+
     public static void hideKeyboard(Activity activity) {
         try {
             View view = activity.getCurrentFocus();

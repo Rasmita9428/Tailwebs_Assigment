@@ -35,6 +35,7 @@ import com.rasmitap.tailwebs_assigment.utils.ConnectionUtil;
 import com.rasmitap.tailwebs_assigment.utils.ConstantStore;
 import com.rasmitap.tailwebs_assigment.utils.GlobalMethods;
 import com.rasmitap.tailwebs_assigment.utils.Utility;
+import com.rasmitap.tailwebs_assigment.utils.Validate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,8 +94,14 @@ public class MainActivity extends AppCompatActivity {
                         if (edt_Studentname.getText().toString().equalsIgnoreCase("")) {
                             GlobalMethods.Dialog(MainActivity.this, "Student Name Require!");
 
+                        }else if (!Validate.isAlpha(edt_Studentname.getText().toString())) {
+                            GlobalMethods.Dialog(MainActivity.this, "Student Name not valid!");
+
                         } else if (edt_subject.getText().toString().equalsIgnoreCase("")) {
                             GlobalMethods.Dialog(MainActivity.this, "Subject Name Require!");
+
+                        }else if (!Validate.isAlpha(edt_subject.getText().toString())) {
+                            GlobalMethods.Dialog(MainActivity.this, "Subject Name not valid!");
 
                         } else if (edt_marks.getText().toString().equalsIgnoreCase("")) {
                             GlobalMethods.Dialog(MainActivity.this, "Marks Require!");

@@ -1,11 +1,17 @@
 package com.rasmitap.tailwebs_assigment.Views.activity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -95,12 +101,40 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             user.setPassword(password);
             user.setPhone(phone);
             databaseHelper.addUser(user);
-            GlobalMethods.Dialog(RegisterActivity.this, "User Register Successfully");
             progressDialog.dismiss();
 
-        Intent intent = new Intent(getApplicationContext(),lOGINActivity.class);
-        startActivity(intent);
-        finish();
+       MoveDialog(RegisterActivity.this,"User Register Successfully");
+    }
+    public void MoveDialog(final Context context, String msg) {
+
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_message);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+        TextView txt_dialog_msg = dialog.findViewById(R.id.txt_dialog_msg);
+        TextView txt_dialog_ok = dialog.findViewById(R.id.txt_dialog_ok);
+
+        txt_dialog_msg.setText(msg);
+        txt_dialog_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,lOGINActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
+        });
+
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        wlp.windowAnimations = R.style.DialogAnimation;
+        wlp.gravity = Gravity.CENTER;
+        window.setAttributes(wlp);
+
+        dialog.show();
+
 
     }
 

@@ -12,7 +12,7 @@ public class Validate {
     private static Pattern pattern;
     private static Matcher matcher;
 
-    private static final String MobilePattern = "[0-9]{10}";
+    private static final String NumaricPattern = "[0-9]{10}";
 
     public static boolean isNotNull(String txt) {
         return txt != null && txt.trim().length() > 0 ? true : false;
@@ -31,13 +31,15 @@ public class Validate {
         return matcher.matches();
     }
 
-    public static boolean validateMobile(String email) {
+    public static boolean validatetext(String email) {
 
-        pattern = Pattern.compile(MobilePattern);
+        pattern = Pattern.compile(NumaricPattern);
         matcher = pattern.matcher(email);
         return matcher.matches();
     }
-
+    public static boolean isAlpha(String name) {
+        return name.matches("[a-zA-Z]+");
+    }
     public static boolean isValidPassword(String passwordhere) {
 
         Pattern specailCharPatten = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);

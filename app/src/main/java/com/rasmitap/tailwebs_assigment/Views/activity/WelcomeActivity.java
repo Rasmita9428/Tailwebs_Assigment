@@ -67,7 +67,7 @@ public class WelcomeActivity extends AppCompatActivity {
         final Handler handler = new Handler();
         final Runnable Update = new Runnable() {
             public void run() {
-                if (currentPage == 5 - 1) {
+                if (currentPage == 4 - 1) {
                     currentPage = 0;
                 }
                 viewpager.setCurrentItem(currentPage++, true);
@@ -111,12 +111,15 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 Log.e("get position", position + "");
-                if (position == 1) {
+                if (position == 0) {
                     img_slider.setImageResource(R.drawable.slider1);
-                } else if (position == 2) {
+                } else if (position == 1) {
                     img_slider.setImageResource(R.drawable.slider2);
-                }else {
+                }else if (position == 2){
                     img_slider.setImageResource(R.drawable.slider3);
+                }else{
+                    img_slider.setImageResource(R.drawable.slider1);
+
                 }
             }
 

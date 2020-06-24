@@ -1,12 +1,18 @@
 package com.rasmitap.tailwebs_assigment.Views.activity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -101,10 +107,7 @@ public class lOGINActivity extends AppCompatActivity implements View.OnClickList
         progressDialog.setMessage("Please Wait...");
         progressDialog.show();
         if (databaseHelper.checkUser(email.trim(),password.trim())) {
-            GlobalMethods.Dialog(lOGINActivity.this, "User Login Successfully");
-            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent);
-            finish();
+            MoveDialog(lOGINActivity.this,"User Login Successfully");
             Utility.setStringSharedPreference(getApplicationContext(), ConstantStore.is_Login,"true");
             Utility.setStringSharedPreference(getApplicationContext(), ConstantStore.UserName,email);
 
@@ -115,6 +118,39 @@ public class lOGINActivity extends AppCompatActivity implements View.OnClickList
             GlobalMethods.Dialog(lOGINActivity.this, "User Name or Password Not Valid");
 
         }
+
+    }
+
+    public void MoveDialog(final Context context, String msg) {
+
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_message);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+        TextView txt_dialog_msg = dialog.findViewById(R.id.txt_dialog_msg);
+        TextView txt_dialog_ok = dialog.findViewById(R.id.txt_dialog_ok);
+
+        txt_dialog_msg.setText(msg);
+        txt_dialog_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
+        });
+
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        wlp.windowAnimations = R.style.DialogAnimation;
+        wlp.gravity = Gravity.CENTER;
+        window.setAttributes(wlp);
+
+        dialog.show();
+
 
     }
 
